@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Antes y Después - Universidad Distrital</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Georgia", "Times New Roman", serif;
+        background-color: #ffffff;
+        color: #2c3e50;
+        line-height: 1.8;
+      }
+
+      header {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        padding: 2.5rem 2rem;
+        border-bottom: 4px solid #003366;
+      }
+
+      .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        font-size: 0.95rem;
+        color: #b0b0b0;
+        font-style: italic;
+        font-family: "Georgia", serif;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: #003366;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #003366;
+        letter-spacing: 0.5px;
+      }
+
+      .section {
+        margin-bottom: 4rem;
+      }
+
+      .description {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 1.5rem;
+        text-align: justify;
+      }
+
+      /* ----- Slider de antes y después ----- */
+      .img-compare-wrapper {
+        background-color: #f8f9fa;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        margin-bottom: 1rem;
+      }
+
+      .img-compare {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        border: 2px solid #003366;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .img-compare img {
+        width: 100%;
+        height: auto;
+        display: block;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .after-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .after-wrapper img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: auto;
+        height: 100%;
+        max-width: none;
+        object-fit: cover;
+      }
+
+      .slider {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 3px;
+        height: 100%;
+        background: #003366;
+        cursor: ew-resize;
+        transform: translateX(-50%);
+        z-index: 10;
+      }
+
+      .slider::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        background: #003366;
+        border: 3px solid #ffffff;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .slider::after {
+        content: "◀ ▶";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: bold;
+        z-index: 1;
+        letter-spacing: 2px;
+      }
+
+      .slider:hover::before {
+        background: #004080;
+      }
+
+      .img-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #666;
+        font-style: italic;
+      }
+
+      /* ----- Tabla de componentes ----- */
+      .table-wrapper {
+        background-color: #f8f9fa;
+        padding: 2rem;
+        border: 1px solid #ddd;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border: 2px solid #003366;
+      }
+
+      thead {
+        background-color: #003366;
+        color: white;
+      }
+
+      th {
+        padding: 1.2rem 1rem;
+        text-align: left;
+        font-weight: 500;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+        border-right: 1px solid #004080;
+      }
+
+      th:last-child {
+        border-right: none;
+      }
+
+      td {
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+        border-right: 1px solid #e0e0e0;
+        vertical-align: top;
+        text-align: left;
+        font-size: 0.95rem;
+      }
+
+      td:last-child {
+        border-right: none;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      tbody tr:hover {
+        background-color: #e8f4f8;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .table-note {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: #666;
+        font-style: italic;
+      }
+
+      footer {
+        background-color: #1a1a1a;
+        color: #b0b0b0;
+        text-align: center;
+        padding: 2rem;
+        margin-top: 4rem;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          padding: 2rem 1rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        .container {
+          padding: 2rem 1rem;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+
+        .img-compare-wrapper,
+        .table-wrapper {
+          padding: 1rem;
+        }
+
+        th,
+        td {
+          padding: 0.8rem;
+          font-size: 0.85rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1>Comparativa de Infraestructura: Antes y Después</h1>
+        <p class="subtitle">Universidad Distrital Francisco José de Caldas</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="section">
+        <h2>I. Análisis Comparativo del Espacio</h2>
+        <p class="description">
+          La siguiente herramienta de comparación visual permite analizar las
+          mejoras implementadas en el espacio destinado a tecnologías de
+          realidad virtual y mixta. Deslice el control central para observar las
+          diferencias entre el estado inicial y el resultado de la intervención.
+        </p>
+
+        <div class="img-compare-wrapper">
+          <div class="img-compare" id="compare">
+            <img
+              src="antes1.jpg"
+              alt="Estado inicial del espacio"
+              id="beforeImg"
+            />
+            <div class="after-wrapper" id="afterWrapper">
+              <img
+                src="despues.png"
+                alt="Estado final del espacio"
+                id="afterImg"
+              />
+            </div>
+            <div class="slider" id="slider"></div>
+          </div>
+          <div class="img-labels">
+            <span>Figura 1a: Estado inicial</span>
+            <span>Figura 1b: Estado transformado</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>II. Zona Izquierda — Realidad Virtual (VR)</h2>
+
+        <h3>Descripción</h3>
+        <p class="description">
+          En esta sección se observan equipos de cómputo de alto rendimiento,
+          visores VR, sensores de movimiento y un área despejada para la
+          movilidad del usuario. Está diseñada para experiencias completamente
+          inmersivas que desconectan al usuario del entorno físico y lo sumergen
+          en un espacio virtual tridimensional.
+        </p>
+
+        <h3>Actividades a Desarrollar</h3>
+        <div class="activities-list">
+          <h4>1. Simulaciones de entornos complejos</h4>
+          <ul>
+            <li>Prácticas en entornos industriales, urbanos o naturales.</li>
+            <li>Capacitación en manejo de maquinaria o drones.</li>
+            <li>Entrenamiento en procedimientos de emergencia o seguridad.</li>
+          </ul>
+
+          <h4>2. Desarrollo y prueba de experiencias VR</h4>
+          <ul>
+            <li>Prototipado de aplicaciones interactivas.</li>
+            <li>
+              Experimentación con motores gráficos (Unity, Unreal Engine).
+            </li>
+            <li>
+              Validación de interfaces inmersivas para proyectos de ingeniería y
+              diseño.
+            </li>
+          </ul>
+
+          <h4>3. Investigación cognitiva y de experiencia de usuario</h4>
+          <ul>
+            <li>Estudios de percepción espacial y adaptación sensorial.</li>
+            <li>
+              Medición de desempeño y concentración en ambientes virtuales.
+            </li>
+          </ul>
+
+          <h4>4. Proyectos interdisciplinarios</h4>
+          <ul>
+            <li>Creación de experiencias narrativas o turísticas en 360°.</li>
+            <li>
+              Reconstrucciones virtuales de espacios culturales o históricos.
+            </li>
+          </ul>
+        </div>
+
+        <h3>Beneficios</h3>
+        <ul class="benefits-list">
+          <li>
+            Fortalece la capacidad de visualización espacial y resolución de
+            problemas.
+          </li>
+          <li>Facilita el aprendizaje experiencial sin riesgos físicos.</li>
+          <li>
+            Genera nuevas oportunidades de investigación aplicada en ingeniería,
+            educación y diseño digital.
+          </li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>III. Zona Derecha — Realidad Mixta (MR)</h2>
+
+        <h3>Descripción</h3>
+        <p class="description">
+          El área de la derecha incorpora dispositivos de realidad mixta
+          (HoloLens, tablets, proyectores interactivos) sobre estaciones de
+          trabajo colaborativas. Permite la integración entre el mundo físico y
+          los modelos digitales, favoreciendo la visualización de datos, objetos
+          3D o procesos en tiempo real.
+        </p>
+
+        <h3>Actividades a Desarrollar</h3>
+        <div class="activities-list">
+          <h4>1. Visualización de proyectos técnicos en 3D</h4>
+          <ul>
+            <li>
+              Modelos estructurales, eléctricos o de redes de telecomunicaciones
+              superpuestos en el entorno real.
+            </li>
+            <li>
+              Revisión colaborativa de prototipos con anotaciones virtuales.
+            </li>
+          </ul>
+
+          <h4>2. Intervenciones de mantenimiento o diseño asistido</h4>
+          <ul>
+            <li>Guías paso a paso proyectadas en tiempo real.</li>
+            <li>
+              Diagnóstico aumentado para prácticas de ingeniería o electrónica.
+            </li>
+          </ul>
+
+          <h4>3. Desarrollo de herramientas educativas interactivas</h4>
+          <ul>
+            <li>
+              Experimentos de física, biología o tecnología mediante
+              visualización aumentada.
+            </li>
+            <li>
+              Aplicaciones que combinen realidad física con simulaciones
+              digitales.
+            </li>
+          </ul>
+
+          <h4>4. Evaluación colaborativa de proyectos interdisciplinarios</h4>
+          <ul>
+            <li>
+              Integración con carreras de diseño industrial, ingeniería
+              catastral, electrónica y telemática.
+            </li>
+            <li>
+              Trabajo conjunto en ambientes híbridos donde los modelos digitales
+              se manipulan colectivamente.
+            </li>
+          </ul>
+        </div>
+
+        <h3>Beneficios</h3>
+        <ul class="benefits-list">
+          <li>Fomenta el aprendizaje activo y colaborativo.</li>
+          <li>
+            Reduce los errores de diseño al visualizar los resultados antes de
+            la implementación real.
+          </li>
+          <li>
+            Amplía el alcance de las simulaciones, conectando la virtualidad con
+            el entorno físico.
+          </li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>IV. Impacto General del Espacio</h2>
+        <p class="description">
+          Este pasillo, antes concebido como un área de descanso, se transforma
+          ahora en un laboratorio de experimentación abierta, que sirve como
+          punto de conexión entre tecnología, creatividad y aprendizaje.
+        </p>
+
+        <div class="impact-list">
+          <p>
+            <strong>Para la comunidad universitaria:</strong> se convierte en un
+            espacio accesible para exploración, innovación y colaboración.
+          </p>
+
+          <p>
+            <strong
+              >Para los programas de Ingeniería Telemática y Sistematización de
+              Datos:</strong
+            >
+            actúa como una extensión práctica donde los estudiantes pueden
+            validar algoritmos, redes o aplicaciones inmersivas.
+          </p>
+
+          <p>
+            <strong>Para el entorno social:</strong> ofrece un ejemplo de cómo
+            los espacios de paso pueden reimaginarse como zonas de interacción
+            tecnológica y desarrollo interdisciplinario.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>V. Inventario de Equipamiento y Especificaciones Técnicas</h2>
+        <p class="description">
+          A continuación se presenta un inventario detallado de los componentes
+          que conforman el espacio de Realidad Virtual (RV) y Realidad Mixta
+          (RM), incluyendo las especificaciones técnicas recomendadas para cada
+          elemento.
+        </p>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Componente</th>
+                <th>Especificaciones Técnicas y Observaciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Computador(es) de Alta Gama (para RV)</strong></td>
+                <td>
+                  Procesador Intel Core i7/i9 o AMD Ryzen 7/9; GPU NVIDIA RTX
+                  3070/4070 o superior; mínimo 16 GB RAM (preferiblemente 32
+                  GB); SSD NVMe de 1TB; fuente certificada y refrigeración
+                  adecuada.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Monitor(es) de Escritorio</strong></td>
+                <td>
+                  Monitor de al menos 24 pulgadas para visualización de
+                  contenido y monitoreo de experiencias inmersivas.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Gafas de Realidad Virtual (VR)</strong></td>
+                <td>
+                  Meta Quest 2/3, Valve Index, HTC Vive Pro 2 o Pimax, con
+                  cables de conexión adecuados (USB-C, DisplayPort, etc.).
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Estaciones Base/Sensores</strong></td>
+                <td>
+                  2-4 estaciones base y soportes de montaje para seguimiento
+                  preciso (según modelo de RV).
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Mandos de Realidad Virtual</strong></td>
+                <td>
+                  Controladores asociados a las gafas (Quest, Valve Index, entre
+                  otros).
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Soporte(s) para Gafas y Mandos</strong></td>
+                <td>
+                  Estaciones de carga o soportes para organización y
+                  almacenamiento.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Cableado y Accesorios</strong></td>
+                <td>
+                  Cables HDMI/DisplayPort, USB 3.0/3.1, extensiones de corriente
+                  y regletas con protección contra sobretensión.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Colchoneta o Alfombra Delimitadora</strong></td>
+                <td>
+                  Material antideslizante para delimitar el área segura de
+                  movimiento durante experiencias inmersivas.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Escritorio/Mesa de Computador</strong></td>
+                <td>
+                  Mesa robusta para soportar PC, monitor y periféricos
+                  asociados.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Silla Ergonómica</strong></td>
+                <td>
+                  Silla ergonómica para el operador o usuario del sistema.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Mesa Perpendicular (con gafas adicionales)</strong>
+                </td>
+                <td>
+                  Mesa de soporte para almacenar o exhibir distintos modelos de
+                  gafas VR.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Tablets o Dispositivos de Realidad Mixta</strong>
+                </td>
+                <td>
+                  iPad Pro, Galaxy Tab S, Surface Pro, o dispositivos
+                  especializados como HoloLens 2 o Magic Leap 2.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Soporte(s) para Tablets</strong></td>
+                <td>
+                  Bases ajustables para mantener dispositivos en posición
+                  vertical.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Estaciones de Carga para Tablets</strong></td>
+                <td>
+                  Sistema de carga múltiple con cables y adaptadores
+                  correspondientes.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Computador(es) de Alta Gama (para RM)</strong></td>
+                <td>
+                  Especificaciones similares a los equipos de RV para tareas de
+                  desarrollo o visualización avanzada.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Sillas de Oficina Ergonómicas</strong></td>
+                <td>
+                  Sillas ergonómicas para usuarios de la zona de simulación y
+                  realidad mixta.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Cableado y Accesorios (generales)</strong></td>
+                <td>
+                  Regletas, extensiones y cables USB para periféricos o carga de
+                  dispositivos.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="table-note">
+            Nota: Las especificaciones son orientativas y sujetas a
+            actualización según los avances tecnológicos y las necesidades
+            institucionales.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p>Universidad Distrital Francisco José de Caldas</p>
+      <p>Laboratorio de Realidad Virtual y Realidad Mixta</p>
+    </footer>
+
+    <script>
+      const compare = document.getElementById("compare");
+      const afterWrapper = document.getElementById("afterWrapper");
+      const slider = document.getElementById("slider");
+      const afterImg = document.getElementById("afterImg");
+      const beforeImg = document.getElementById("beforeImg");
+
+      let isDragging = false;
+
+      function adjustAfterImage() {
+        const compareWidth = compare.offsetWidth;
+        afterImg.style.width = compareWidth + "px";
+      }
+
+      beforeImg.addEventListener("load", adjustAfterImage);
+      afterImg.addEventListener("load", adjustAfterImage);
+      window.addEventListener("resize", adjustAfterImage);
+
+      slider.addEventListener("mousedown", () => (isDragging = true));
+      window.addEventListener("mouseup", () => (isDragging = false));
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        moveSlider(e.clientX);
+      });
+
+      slider.addEventListener("touchstart", (e) => {
+        isDragging = true;
+        e.preventDefault();
+      });
+
+      window.addEventListener("touchend", () => (isDragging = false));
+
+      window.addEventListener("touchmove", (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        moveSlider(e.touches[0].clientX);
+      });
+
+      function moveSlider(clientX) {
+        const rect = compare.getBoundingClientRect();
+        let pos = ((clientX - rect.left) / rect.width) * 100;
+        if (pos < 0) pos = 0;
+        if (pos > 100) pos = 100;
+        afterWrapper.style.width = pos + "%";
+        slider.style.left = pos + "%";
+      }
+    </script>
+  </body>
+</html>
