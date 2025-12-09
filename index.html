@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Antes y Después - Universidad Distrital</title>
     <style>
+      /* [Se mantiene todo el CSS] */
       * {
         margin: 0;
         padding: 0;
@@ -41,13 +42,49 @@
         font-size: 0.95rem;
         color: #b0b0b0;
         font-style: italic;
-        font-family: "Georgia", serif;
+      }
+
+      .nav-menu {
+        margin-top: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .nav-btn {
+        padding: 0.75rem 1.5rem;
+        background-color: #2c3e50;
+        color: #ffffff;
+        border: 2px solid #003366;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-family: "Georgia", "Times New Roman", serif;
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #003366;
+        transform: translateY(-2px);
+      }
+
+      .nav-btn.active {
+        background-color: #003366;
+        box-shadow: 0 4px 8px rgba(0, 51, 102, 0.3);
       }
 
       .container {
         max-width: 1200px;
         margin: 0 auto;
         padding: 3rem 2rem;
+      }
+
+      .content-section {
+        display: none;
+      }
+
+      .content-section.active {
+        display: block;
       }
 
       h2 {
@@ -58,6 +95,14 @@
         padding-bottom: 0.75rem;
         border-bottom: 2px solid #003366;
         letter-spacing: 0.5px;
+      }
+
+      h3 {
+        font-size: 1.3rem;
+        font-weight: 400;
+        color: #003366;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
       }
 
       .section {
@@ -71,7 +116,6 @@
         text-align: justify;
       }
 
-      /* ----- Slider de antes y después ----- */
       .img-compare-wrapper {
         background-color: #f8f9fa;
         padding: 2rem;
@@ -166,7 +210,105 @@
         font-style: italic;
       }
 
-      /* ----- Tabla de componentes ----- */
+      .image-toggle-wrapper {
+        background-color: #f8f9fa;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        margin-bottom: 2rem;
+      }
+
+      .toggle-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .toggle-btn {
+        padding: 0.75rem 1rem;
+        background-color: #e0e0e0;
+        color: #2c3e50;
+        border: 2px solid #003366;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-family: "Georgia", "Times New Roman", serif;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .toggle-btn:hover {
+        background-color: #d0d0d0;
+      }
+
+      .toggle-btn.active {
+        background-color: #003366;
+        color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 51, 102, 0.3);
+      }
+
+      .image-display {
+        position: relative;
+        width: 100%;
+        border: 2px solid #003366;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        min-height: 400px;
+        background-color: #ffffff;
+      }
+
+      .image-display img {
+        width: 100%;
+        height: auto;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .image-display img.active {
+        opacity: 1;
+        position: relative;
+      }
+
+      .image-caption {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        color: #666;
+        font-style: italic;
+      }
+
+      .activities-list,
+      .benefits-list {
+        margin: 1.5rem 0;
+      }
+
+      .activities-list h4 {
+        color: #003366;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-size: 1.05rem;
+      }
+
+      .activities-list ul,
+      .benefits-list {
+        list-style-position: inside;
+        padding-left: 1rem;
+      }
+
+      .activities-list li,
+      .benefits-list li {
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
+
+      .impact-list p {
+        margin-bottom: 1.25rem;
+        text-align: justify;
+      }
+
       .table-wrapper {
         background-color: #f8f9fa;
         padding: 2rem;
@@ -243,28 +385,37 @@
         header {
           padding: 2rem 1rem;
         }
-
         h1 {
           font-size: 1.5rem;
         }
-
         .container {
           padding: 2rem 1rem;
         }
-
         h2 {
           font-size: 1.3rem;
         }
-
         .img-compare-wrapper,
-        .table-wrapper {
+        .table-wrapper,
+        .image-toggle-wrapper {
           padding: 1rem;
         }
-
         th,
         td {
           padding: 0.8rem;
           font-size: 0.85rem;
+        }
+        .nav-menu {
+          flex-direction: column;
+        }
+        .nav-btn {
+          width: 100%;
+        }
+        .toggle-buttons {
+          flex-direction: column;
+        }
+        .toggle-btn {
+          width: 100%;
+          padding: 0.75rem 1.5rem;
         }
       }
     </style>
@@ -274,360 +425,634 @@
       <div class="header-content">
         <h1>Comparativa de Infraestructura: Antes y Después</h1>
         <p class="subtitle">Universidad Distrital Francisco José de Caldas</p>
+        <nav class="nav-menu">
+          <button class="nav-btn active" onclick="showSection('pasillo')">
+            Pasillo VR/MR
+          </button>
+          <button class="nav-btn" onclick="showSection('laboratorio')">
+            Laboratorio de Simulaciones
+          </button>
+          <button class="nav-btn" onclick="showSection('terraza')">
+            Salón de Visualización
+          </button>
+        </nav>
       </div>
     </header>
 
     <div class="container">
-      <section class="section">
-        <h2>I. Análisis Comparativo del Espacio</h2>
-        <p class="description">
-          La siguiente herramienta de comparación visual permite analizar las
-          mejoras implementadas en el espacio destinado a tecnologías de
-          realidad virtual y mixta. Deslice el control central para observar las
-          diferencias entre el estado inicial y el resultado de la intervención.
-        </p>
+      <div id="pasillo" class="content-section active">
+        <section class="section">
+          <h2>I. Análisis Comparativo del Espacio</h2>
+          <p class="description">
+            La siguiente herramienta de comparación visual permite analizar las
+            mejoras implementadas en el espacio destinado a tecnologías de
+            realidad virtual y mixta. Deslice el control central para observar
+            las diferencias entre el estado inicial y el resultado de la
+            intervención.
+          </p>
 
-        <div class="img-compare-wrapper">
-          <div class="img-compare" id="compare">
-            <img
-              src="antes1.jpg"
-              alt="Estado inicial del espacio"
-              id="beforeImg"
-            />
-            <div class="after-wrapper" id="afterWrapper">
+          <div class="img-compare-wrapper">
+            <div class="img-compare" id="compare">
               <img
-                src="despues.png"
-                alt="Estado final del espacio"
-                id="afterImg"
+                src="antes1.jpg"
+                alt="Estado inicial del espacio"
+                id="beforeImg"
+              />
+              <div class="after-wrapper" id="afterWrapper">
+                <img
+                  src="despues.png"
+                  alt="Estado final del espacio"
+                  id="afterImg"
+                />
+              </div>
+              <div class="slider" id="slider"></div>
+            </div>
+            <div class="img-labels">
+              <span>Figura 1a: Estado inicial</span>
+              <span>Figura 1b: Estado transformado</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>II. Zona Izquierda — Realidad Virtual (VR)</h2>
+          <h3>Descripción</h3>
+          <p class="description">
+            En esta sección se observan equipos de cómputo de alto rendimiento,
+            visores VR, sensores de movimiento y un área despejada para la
+            movilidad del usuario. Está diseñada para experiencias completamente
+            inmersivas que desconectan al usuario del entorno físico y lo
+            sumergen en un espacio virtual tridimensional.
+          </p>
+
+          <h3>Actividades a Desarrollar</h3>
+          <div class="activities-list">
+            <h4>1. Simulaciones de entornos complejos</h4>
+            <ul>
+              <li>Prácticas en entornos industriales, urbanos o naturales.</li>
+              <li>Capacitación en manejo de maquinaria o drones.</li>
+              <li>
+                Entrenamiento en procedimientos de emergencia o seguridad.
+              </li>
+            </ul>
+
+            <h4>2. Desarrollo y prueba de experiencias VR</h4>
+            <ul>
+              <li>Prototipado de aplicaciones interactivas.</li>
+              <li>
+                Experimentación con motores gráficos (Unity, Unreal Engine).
+              </li>
+              <li>
+                Validación de interfaces inmersivas para proyectos de ingeniería
+                y diseño.
+              </li>
+            </ul>
+
+            <h4>3. Investigación cognitiva y de experiencia de usuario</h4>
+            <ul>
+              <li>Estudios de percepción espacial y adaptación sensorial.</li>
+              <li>
+                Medición de desempeño y concentración en ambientes virtuales.
+              </li>
+            </ul>
+
+            <h4>4. Proyectos interdisciplinarios</h4>
+            <ul>
+              <li>Creación de experiencias narrativas o turísticas en 360°.</li>
+              <li>
+                Reconstrucciones virtuales de espacios culturales o históricos.
+              </li>
+            </ul>
+          </div>
+
+          <h3>Beneficios</h3>
+          <ul class="benefits-list">
+            <li>
+              Fortalece la capacidad de visualización espacial y resolución de
+              problemas.
+            </li>
+            <li>Facilita el aprendizaje experiencial sin riesgos físicos.</li>
+            <li>
+              Genera nuevas oportunidades de investigación aplicada en
+              ingeniería, educación y diseño digital.
+            </li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2>III. Zona Derecha — Realidad Mixta (MR)</h2>
+          <h3>Descripción</h3>
+          <p class="description">
+            El área de la derecha incorpora dispositivos de realidad mixta
+            (HoloLens, tablets, proyectores interactivos) sobre estaciones de
+            trabajo colaborativas. Permite la integración entre el mundo físico
+            y los modelos digitales, favoreciendo la visualización de datos,
+            objetos 3D o procesos en tiempo real.
+          </p>
+
+          <h3>Actividades a Desarrollar</h3>
+          <div class="activities-list">
+            <h4>1. Visualización de proyectos técnicos en 3D</h4>
+            <ul>
+              <li>
+                Modelos estructurales, eléctricos o de redes de
+                telecomunicaciones superpuestos en el entorno real.
+              </li>
+              <li>
+                Revisión colaborativa de prototipos con anotaciones virtuales.
+              </li>
+            </ul>
+
+            <h4>2. Intervenciones de mantenimiento o diseño asistido</h4>
+            <ul>
+              <li>Guías paso a paso proyectadas en tiempo real.</li>
+              <li>
+                Diagnóstico aumentado para prácticas de ingeniería o
+                electrónica.
+              </li>
+            </ul>
+
+            <h4>3. Desarrollo de herramientas educativas interactivas</h4>
+            <ul>
+              <li>
+                Experimentos de física, biología o tecnología mediante
+                visualización aumentada.
+              </li>
+              <li>
+                Aplicaciones que combinen realidad física con simulaciones
+                digitales.
+              </li>
+            </ul>
+
+            <h4>4. Evaluación colaborativa de proyectos interdisciplinarios</h4>
+            <ul>
+              <li>
+                Integración con carreras de diseño industrial, ingeniería
+                catastral, electrónica y telemática.
+              </li>
+              <li>
+                Trabajo conjunto en ambientes híbridos donde los modelos
+                digitales se manipulan colectivamente.
+              </li>
+            </ul>
+          </div>
+
+          <h3>Beneficios</h3>
+          <ul class="benefits-list">
+            <li>Fomenta el aprendizaje activo y colaborativo.</li>
+            <li>
+              Reduce los errores de diseño al visualizar los resultados antes de
+              la implementación real.
+            </li>
+            <li>
+              Amplía el alcance de las simulaciones, conectando la virtualidad
+              con el entorno físico.
+            </li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2>IV. Impacto General del Espacio</h2>
+          <p class="description">
+            Este pasillo, antes concebido como un área de descanso, se
+            transforma ahora en un laboratorio de experimentación abierta, que
+            sirve como punto de conexión entre tecnología, creatividad y
+            aprendizaje.
+          </p>
+
+          <div class="impact-list">
+            <p>
+              <strong>Para la comunidad universitaria:</strong> se convierte en
+              un espacio accesible para exploración, innovación y colaboración.
+            </p>
+            <p>
+              <strong
+                >Para los programas de Ingeniería Telemática y Sistematización
+                de Datos:</strong
+              >
+              actúa como una extensión práctica donde los estudiantes pueden
+              validar algoritmos, redes o aplicaciones inmersivas.
+            </p>
+            <p>
+              <strong>Para el entorno social:</strong> ofrece un ejemplo de cómo
+              los espacios de paso pueden reimaginarse como zonas de interacción
+              tecnológica y desarrollo interdisciplinario.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>V. Inventario de Equipamiento y Especificaciones Técnicas</h2>
+          <p class="description">
+            A continuación se presenta un inventario detallado de los
+            componentes que conforman el espacio de Realidad Virtual (RV) y
+            Realidad Mixta (RM), incluyendo las especificaciones técnicas
+            recomendadas para cada elemento.
+          </p>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Componente</th>
+                  <th>Especificaciones Técnicas y Observaciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Computador(es) de Alta Gama (para RV)</strong>
+                  </td>
+                  <td>
+                    Procesador Intel Core i7/i9 o AMD Ryzen 7/9; GPU NVIDIA RTX
+                    3070/4070 o superior; mínimo 16 GB RAM (preferiblemente 32
+                    GB); SSD NVMe de 1TB; fuente certificada y refrigeración
+                    adecuada.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Monitor(es) de Escritorio</strong></td>
+                  <td>
+                    Monitor de al menos 24 pulgadas para visualización de
+                    contenido y monitoreo de experiencias inmersivas.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Gafas de Realidad Virtual (VR)</strong></td>
+                  <td>
+                    Meta Quest 2/3, Valve Index, HTC Vive Pro 2 o Pimax, con
+                    cables de conexión adecuados (USB-C, DisplayPort, etc.).
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Estaciones Base/Sensores</strong></td>
+                  <td>
+                    2-4 estaciones base y soportes de montaje para seguimiento
+                    preciso (según modelo de RV).
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Mandos de Realidad Virtual</strong></td>
+                  <td>
+                    Controladores asociados a las gafas (Quest, Valve Index,
+                    entre otros).
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Soporte(s) para Gafas y Mandos</strong></td>
+                  <td>
+                    Estaciones de carga o soportes para organización y
+                    almacenamiento.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Cableado y Accesorios</strong></td>
+                  <td>
+                    Cables HDMI/DisplayPort, USB 3.0/3.1, extensiones de
+                    corriente y regletas con protección contra sobretensión.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Colchoneta o Alfombra Delimitadora</strong></td>
+                  <td>
+                    Material antideslizante para delimitar el área segura de
+                    movimiento durante experiencias inmersivas.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Escritorio/Mesa de Computador</strong></td>
+                  <td>
+                    Mesa robusta para soportar PC, monitor y periféricos
+                    asociados.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Silla Ergonómica</strong></td>
+                  <td>
+                    Silla ergonómica para el operador o usuario del sistema.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Mesa Perpendicular (con gafas adicionales)</strong>
+                  </td>
+                  <td>
+                    Mesa de soporte para almacenar o exhibir distintos modelos
+                    de gafas VR.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Tablets o Dispositivos de Realidad Mixta</strong>
+                  </td>
+                  <td>
+                    iPad Pro, Galaxy Tab S, Surface Pro, o dispositivos
+                    especializados como HoloLens 2 o Magic Leap 2.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Soporte(s) para Tablets</strong></td>
+                  <td>
+                    Bases ajustables para mantener dispositivos en posición
+                    vertical.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Estaciones de Carga para Tablets</strong></td>
+                  <td>
+                    Sistema de carga múltiple con cables y adaptadores
+                    correspondientes.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Computador(es) de Alta Gama (para RM)</strong>
+                  </td>
+                  <td>
+                    Especificaciones similares a los equipos de RV para tareas
+                    de desarrollo o visualización avanzada.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Sillas de Oficina Ergonómicas</strong></td>
+                  <td>
+                    Sillas ergonómicas para usuarios de la zona de simulación y
+                    realidad mixta.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Cableado y Accesorios (generales)</strong></td>
+                  <td>
+                    Regletas, extensiones y cables USB para periféricos o carga
+                    de dispositivos.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="table-note">
+              Nota: Las especificaciones son orientativas y sujetas a
+              actualización según los avances tecnológicos y las necesidades
+              institucionales.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <div id="laboratorio" class="content-section">
+        <section class="section">
+          <h2>Laboratorio de Simulaciones y Realidad Virtual</h2>
+          <p class="description">
+            Este espacio ha sido diseñado como un laboratorio especializado para
+            simulaciones avanzadas y desarrollo de aplicaciones de realidad
+            virtual que requieren alta potencia de cómputo. Utilice los botones
+            para explorar las diferentes vistas de configuración del
+            laboratorio.
+          </p>
+
+          <div class="image-toggle-wrapper">
+            <div class="toggle-buttons">
+              <button
+                class="toggle-btn active"
+                onclick="toggleImage('lab', 'antes')"
+              >
+                Estado Inicial
+              </button>
+              <button
+                class="toggle-btn"
+                onclick="toggleImage('lab', 'despues-1')"
+              >
+                Vista 1
+              </button>
+              <button
+                class="toggle-btn"
+                onclick="toggleImage('lab', 'despues-2')"
+              >
+                Vista 2
+              </button>
+              <button
+                class="toggle-btn"
+                onclick="toggleImage('lab', 'despues-3')"
+              >
+                Vista 3
+              </button>
+            </div>
+            <div class="image-display" id="lab-display">
+              <img
+                src="lab-antes.jpg"
+                alt="Laboratorio - Estado inicial"
+                class="active"
+                id="lab-antes"
+              />
+              <img
+                src="lab-despues-1.jpg"
+                alt="Laboratorio - Vista 1"
+                id="lab-despues-1"
+              />
+              <img
+                src="lab-despues-2.jpg"
+                alt="Laboratorio - Vista 2"
+                id="lab-despues-2"
+              />
+              <img
+                src="lab-despues-3.jpg"
+                alt="Laboratorio - Vista 3"
+                id="lab-despues-3"
               />
             </div>
-            <div class="slider" id="slider"></div>
+            <p class="image-caption" id="lab-caption">
+              Estado inicial del Laboratorio de Simulaciones
+            </p>
           </div>
-          <div class="img-labels">
-            <span>Figura 1a: Estado inicial</span>
-            <span>Figura 1b: Estado transformado</span>
+
+          <h3>Características del Espacio</h3>
+          <p class="description">
+            Este laboratorio se configura como un centro de I+D, priorizando la
+            flexibilidad del espacio y la capacidad de las estaciones para
+            manejar tareas exigentes como renderizado, física avanzada y
+            procesamiento de datos en tiempo real.
+          </p>
+          <div class="activities-list">
+            <h4>Usos por Configuración (Vistas)</h4>
+            <ul>
+              <li>
+                Vista 1 (Colaborativa y almacenamiento):Facilita las sesiones de
+                programación en pareja o en grupo, con acceso inmediato a la
+                estantería de equipos y recursos de apoyo.
+              </li>
+              <li>
+                Vista 2 (Visualización y Prototipado):Permite utilizar la gran
+                ventana como fuente de luz controlada para pruebas de RV y usar
+                la pizarra para diagramas complejos o proyección de interfaces.
+              </li>
+              <li>
+                Vista 3 (Alta Densidad Individual):Optimiza el número de
+                usuarios que pueden trabajar simultáneamente en proyectos que
+                demandan un PC por persona, como asignaturas prácticas de diseño
+                3D y simulaciones.
+              </li>
+            </ul>
+
+            <h4>Equipamiento y Servicios Clave</h4>
+            <ul>
+              <li>
+                Estaciones de trabajo con procesadores y GPUs de alto
+                rendimiento.
+              </li>
+              <li>
+                Área de movimiento libre delimitada (alfombra) para experiencias
+                de RV a escala.
+              </li>
+              <li>
+                Almacenamiento modular y señalizado para visores, mandos y
+                sensores.
+              </li>
+            </ul>
           </div>
-        </div>
-      </section>
 
-      <section class="section">
-        <h2>II. Zona Izquierda — Realidad Virtual (VR)</h2>
-
-        <h3>Descripción</h3>
-        <p class="description">
-          En esta sección se observan equipos de cómputo de alto rendimiento,
-          visores VR, sensores de movimiento y un área despejada para la
-          movilidad del usuario. Está diseñada para experiencias completamente
-          inmersivas que desconectan al usuario del entorno físico y lo sumergen
-          en un espacio virtual tridimensional.
-        </p>
-
-        <h3>Actividades a Desarrollar</h3>
-        <div class="activities-list">
-          <h4>1. Simulaciones de entornos complejos</h4>
-          <ul>
-            <li>Prácticas en entornos industriales, urbanos o naturales.</li>
-            <li>Capacitación en manejo de maquinaria o drones.</li>
-            <li>Entrenamiento en procedimientos de emergencia o seguridad.</li>
-          </ul>
-
-          <h4>2. Desarrollo y prueba de experiencias VR</h4>
-          <ul>
-            <li>Prototipado de aplicaciones interactivas.</li>
+          <h3>Beneficios</h3>
+          <ul class="benefits-list">
             <li>
-              Experimentación con motores gráficos (Unity, Unreal Engine).
+              Garantiza la infraestructura necesaria para desarrollar proyectos
+              de ingeniería inmersiva y gemelos digitales.
             </li>
             <li>
-              Validación de interfaces inmersivas para proyectos de ingeniería y
-              diseño.
+              Permite la validación de diseños y la experimentación en entornos
+              controlados y seguros.
+            </li>
+            <li>
+              Fomenta la colaboración avanzada en proyectos de fin de carrera y
+              grupos de investigación.
             </li>
           </ul>
+        </section>
+      </div>
 
-          <h4>3. Investigación cognitiva y de experiencia de usuario</h4>
-          <ul>
-            <li>Estudios de percepción espacial y adaptación sensorial.</li>
-            <li>
-              Medición de desempeño y concentración en ambientes virtuales.
-            </li>
-          </ul>
-
-          <h4>4. Proyectos interdisciplinarios</h4>
-          <ul>
-            <li>Creación de experiencias narrativas o turísticas en 360°.</li>
-            <li>
-              Reconstrucciones virtuales de espacios culturales o históricos.
-            </li>
-          </ul>
-        </div>
-
-        <h3>Beneficios</h3>
-        <ul class="benefits-list">
-          <li>
-            Fortalece la capacidad de visualización espacial y resolución de
-            problemas.
-          </li>
-          <li>Facilita el aprendizaje experiencial sin riesgos físicos.</li>
-          <li>
-            Genera nuevas oportunidades de investigación aplicada en ingeniería,
-            educación y diseño digital.
-          </li>
-        </ul>
-      </section>
-
-      <section class="section">
-        <h2>III. Zona Derecha — Realidad Mixta (MR)</h2>
-
-        <h3>Descripción</h3>
-        <p class="description">
-          El área de la derecha incorpora dispositivos de realidad mixta
-          (HoloLens, tablets, proyectores interactivos) sobre estaciones de
-          trabajo colaborativas. Permite la integración entre el mundo físico y
-          los modelos digitales, favoreciendo la visualización de datos, objetos
-          3D o procesos en tiempo real.
-        </p>
-
-        <h3>Actividades a Desarrollar</h3>
-        <div class="activities-list">
-          <h4>1. Visualización de proyectos técnicos en 3D</h4>
-          <ul>
-            <li>
-              Modelos estructurales, eléctricos o de redes de telecomunicaciones
-              superpuestos en el entorno real.
-            </li>
-            <li>
-              Revisión colaborativa de prototipos con anotaciones virtuales.
-            </li>
-          </ul>
-
-          <h4>2. Intervenciones de mantenimiento o diseño asistido</h4>
-          <ul>
-            <li>Guías paso a paso proyectadas en tiempo real.</li>
-            <li>
-              Diagnóstico aumentado para prácticas de ingeniería o electrónica.
-            </li>
-          </ul>
-
-          <h4>3. Desarrollo de herramientas educativas interactivas</h4>
-          <ul>
-            <li>
-              Experimentos de física, biología o tecnología mediante
-              visualización aumentada.
-            </li>
-            <li>
-              Aplicaciones que combinen realidad física con simulaciones
-              digitales.
-            </li>
-          </ul>
-
-          <h4>4. Evaluación colaborativa de proyectos interdisciplinarios</h4>
-          <ul>
-            <li>
-              Integración con carreras de diseño industrial, ingeniería
-              catastral, electrónica y telemática.
-            </li>
-            <li>
-              Trabajo conjunto en ambientes híbridos donde los modelos digitales
-              se manipulan colectivamente.
-            </li>
-          </ul>
-        </div>
-
-        <h3>Beneficios</h3>
-        <ul class="benefits-list">
-          <li>Fomenta el aprendizaje activo y colaborativo.</li>
-          <li>
-            Reduce los errores de diseño al visualizar los resultados antes de
-            la implementación real.
-          </li>
-          <li>
-            Amplía el alcance de las simulaciones, conectando la virtualidad con
-            el entorno físico.
-          </li>
-        </ul>
-      </section>
-
-      <section class="section">
-        <h2>IV. Impacto General del Espacio</h2>
-        <p class="description">
-          Este pasillo, antes concebido como un área de descanso, se transforma
-          ahora en un laboratorio de experimentación abierta, que sirve como
-          punto de conexión entre tecnología, creatividad y aprendizaje.
-        </p>
-
-        <div class="impact-list">
-          <p>
-            <strong>Para la comunidad universitaria:</strong> se convierte en un
-            espacio accesible para exploración, innovación y colaboración.
+      <div id="terraza" class="content-section">
+        <section class="section">
+          <h2>Salón de Visualización - Terraza</h2>
+          <p class="description">
+            La terraza se transforma en un espacio versátil y luminoso para
+            presentación, co-creación y visualización informal de datos y
+            modelos. Utilice los botones para explorar las diferentes vistas de
+            configuración del salón.
           </p>
 
-          <p>
-            <strong
-              >Para los programas de Ingeniería Telemática y Sistematización de
-              Datos:</strong
-            >
-            actúa como una extensión práctica donde los estudiantes pueden
-            validar algoritmos, redes o aplicaciones inmersivas.
-          </p>
+          <div class="image-toggle-wrapper">
+            <div class="toggle-buttons">
+              <button
+                class="toggle-btn active"
+                onclick="toggleImage('terraza', 'antes')"
+              >
+                Estado Inicial
+              </button>
+              <button
+                class="toggle-btn"
+                onclick="toggleImage('terraza', 'despues-1')"
+              >
+                Vista 1
+              </button>
+              <button
+                class="toggle-btn"
+                onclick="toggleImage('terraza', 'despues-2')"
+              >
+                Vista 2
+              </button>
+              <button
+                class="toggle-btn"
+                onclick="toggleImage('terraza', 'despues-3')"
+              >
+                Vista 3
+              </button>
+            </div>
+            <div class="image-display" id="terraza-display">
+              <img
+                src="terraza-antes.jpg"
+                alt="Terraza - Estado inicial"
+                class="active"
+                id="terraza-antes"
+              />
+              <img
+                src="terraza-despues-1.jpg"
+                alt="Terraza - Vista 1"
+                id="terraza-despues-1"
+              />
+              <img
+                src="terraza-despues-2.jpg"
+                alt="Terraza - Vista 2"
+                id="terraza-despues-2"
+              />
+              <img
+                src="terraza-despues-3.jpg"
+                alt="Terraza - Vista 3"
+                id="terraza-despues-3"
+              />
+            </div>
+            <p class="image-caption" id="terraza-caption">
+              Estado inicial del Salón de Visualización en Terraza
+            </p>
+          </div>
 
-          <p>
-            <strong>Para el entorno social:</strong> ofrece un ejemplo de cómo
-            los espacios de paso pueden reimaginarse como zonas de interacción
-            tecnológica y desarrollo interdisciplinario.
+          <h3>Características del Espacio</h3>
+          <p class="description">
+            El diseño prioriza el uso de dispositivos portátiles y el mobiliario
+            flexible. Es un punto de encuentro que aprovecha el entorno exterior
+            para generar ambientes de trabajo menos formales, ideales para la
+            creatividad y el intercambio de ideas.
           </p>
-        </div>
-      </section>
+          <div class="activities-list">
+            <h4>Usos por Configuración (Vistas)</h4>
+            <ul>
+              <li>
+                Vista 1 (Reuniones Informales): Mesas pequeñas y visores
+                portátiles que fomentan la interacción y la revisión rápida de
+                prototipos entre grupos de trabajo.
+              </li>
+              <li>
+                Vista 2 (Área de Presentación):El mobiliario cómodo permite
+                sesiones de pitching o feedback de proyectos, usando la pared de
+                la Facultad como fondo institucional para las presentaciones.
+              </li>
+              <li>
+                Vista 3 (Modular para Inmersión):Facilita la creación de
+                pequeñas zonas de inmersión para que varios usuarios prueben
+                simulaciones breves de forma individual o en pareja.
+              </li>
+            </ul>
 
-      <section class="section">
-        <h2>V. Inventario de Equipamiento y Especificaciones Técnicas</h2>
-        <p class="description">
-          A continuación se presenta un inventario detallado de los componentes
-          que conforman el espacio de Realidad Virtual (RV) y Realidad Mixta
-          (RM), incluyendo las especificaciones técnicas recomendadas para cada
-          elemento.
-        </p>
+            <h4>Infraestructura Clave</h4>
+            <ul>
+              <li>
+                Mobiliario ligero y reconfigurable para adaptarse a distintos
+                tamaños de grupo.
+              </li>
+              <li>
+                Visores VR autónomos (sin necesidad de PC) para máxima
+                portabilidad y uso en exteriores.
+              </li>
+              <li>
+                Espacios abiertos que reducen la fatiga visual y facilitan el
+                descanso activo.
+              </li>
+            </ul>
+          </div>
 
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Componente</th>
-                <th>Especificaciones Técnicas y Observaciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Computador(es) de Alta Gama (para RV)</strong></td>
-                <td>
-                  Procesador Intel Core i7/i9 o AMD Ryzen 7/9; GPU NVIDIA RTX
-                  3070/4070 o superior; mínimo 16 GB RAM (preferiblemente 32
-                  GB); SSD NVMe de 1TB; fuente certificada y refrigeración
-                  adecuada.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Monitor(es) de Escritorio</strong></td>
-                <td>
-                  Monitor de al menos 24 pulgadas para visualización de
-                  contenido y monitoreo de experiencias inmersivas.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Gafas de Realidad Virtual (VR)</strong></td>
-                <td>
-                  Meta Quest 2/3, Valve Index, HTC Vive Pro 2 o Pimax, con
-                  cables de conexión adecuados (USB-C, DisplayPort, etc.).
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Estaciones Base/Sensores</strong></td>
-                <td>
-                  2-4 estaciones base y soportes de montaje para seguimiento
-                  preciso (según modelo de RV).
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Mandos de Realidad Virtual</strong></td>
-                <td>
-                  Controladores asociados a las gafas (Quest, Valve Index, entre
-                  otros).
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Soporte(s) para Gafas y Mandos</strong></td>
-                <td>
-                  Estaciones de carga o soportes para organización y
-                  almacenamiento.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Cableado y Accesorios</strong></td>
-                <td>
-                  Cables HDMI/DisplayPort, USB 3.0/3.1, extensiones de corriente
-                  y regletas con protección contra sobretensión.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Colchoneta o Alfombra Delimitadora</strong></td>
-                <td>
-                  Material antideslizante para delimitar el área segura de
-                  movimiento durante experiencias inmersivas.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Escritorio/Mesa de Computador</strong></td>
-                <td>
-                  Mesa robusta para soportar PC, monitor y periféricos
-                  asociados.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Silla Ergonómica</strong></td>
-                <td>
-                  Silla ergonómica para el operador o usuario del sistema.
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Mesa Perpendicular (con gafas adicionales)</strong>
-                </td>
-                <td>
-                  Mesa de soporte para almacenar o exhibir distintos modelos de
-                  gafas VR.
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Tablets o Dispositivos de Realidad Mixta</strong>
-                </td>
-                <td>
-                  iPad Pro, Galaxy Tab S, Surface Pro, o dispositivos
-                  especializados como HoloLens 2 o Magic Leap 2.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Soporte(s) para Tablets</strong></td>
-                <td>
-                  Bases ajustables para mantener dispositivos en posición
-                  vertical.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Estaciones de Carga para Tablets</strong></td>
-                <td>
-                  Sistema de carga múltiple con cables y adaptadores
-                  correspondientes.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Computador(es) de Alta Gama (para RM)</strong></td>
-                <td>
-                  Especificaciones similares a los equipos de RV para tareas de
-                  desarrollo o visualización avanzada.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Sillas de Oficina Ergonómicas</strong></td>
-                <td>
-                  Sillas ergonómicas para usuarios de la zona de simulación y
-                  realidad mixta.
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Cableado y Accesorios (generales)</strong></td>
-                <td>
-                  Regletas, extensiones y cables USB para periféricos o carga de
-                  dispositivos.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="table-note">
-            Nota: Las especificaciones son orientativas y sujetas a
-            actualización según los avances tecnológicos y las necesidades
-            institucionales.
-          </p>
-        </div>
-      </section>
+          <h3>Beneficios</h3>
+          <ul class="benefits-list">
+            <li>
+              Promueve la innovación abierta y la integración de estudiantes y
+              profesores de diferentes disciplinas.
+            </li>
+            <li>
+              Ofrece un ambiente de trabajo flexible que se adapta a las
+              metodologías ágiles y creativas.
+            </li>
+            <li>
+              Funciona como vitrina tecnológica, mejorando la imagen
+              institucional ante visitantes y la comunidad.
+            </li>
+          </ul>
+        </section>
+      </div>
     </div>
 
     <footer>
@@ -636,52 +1061,176 @@
     </footer>
 
     <script>
-      const compare = document.getElementById("compare");
-      const afterWrapper = document.getElementById("afterWrapper");
-      const slider = document.getElementById("slider");
-      const afterImg = document.getElementById("afterImg");
-      const beforeImg = document.getElementById("beforeImg");
+      // Etiquetas para los captions actualizadas con el análisis visual
+      const CAPTIONS = {
+        lab: {
+          antes: "Estado inicial del Laboratorio de Simulaciones",
+          "despues-1":
+            "Vista 1: Diseño centralizado y colaborativo, ideal para sesiones de desarrollo y almacenamiento de equipo.",
+          "despues-2":
+            "Vista 2: Configuración optimizada con luz natural, enfocada en la visualización y el prototipado rápido.",
+          "despues-3":
+            "Vista 3: Configuración lineal de alta densidad para estaciones de trabajo y desarrollo individualizado.",
+        },
+        terraza: {
+          antes: "Estado inicial del Salón de Visualización en Terraza",
+          "despues-1":
+            "Vista 1: Configuración informal con mesas para reuniones y equipamiento portátil de Realidad Virtual.",
+          "despues-2":
+            "Vista 2: Espacio flexible de reuniones con mobiliario cómodo y área de visualización dedicada.",
+          "despues-3":
+            "Vista 3: Configuración modular para sesiones cortas de inmersión y revisión de proyectos entre pares.",
+        },
+      };
 
-      let isDragging = false;
+      // Función para cambiar la sección activa (pestañas de navegación)
+      function showSection(sectionId) {
+        const sections = document.querySelectorAll(".content-section");
+        sections.forEach((section) => section.classList.remove("active"));
+        document.getElementById(sectionId).classList.add("active");
 
-      function adjustAfterImage() {
-        const compareWidth = compare.offsetWidth;
-        afterImg.style.width = compareWidth + "px";
+        const navBtns = document.querySelectorAll(".nav-btn");
+        navBtns.forEach((btn) => btn.classList.remove("active"));
+        document
+          .querySelector(`.nav-btn[onclick="showSection('${sectionId}')"]`)
+          .classList.add("active");
+
+        // Asegurar que el comparador de imágenes se reinicie o se active correctamente
+        if (sectionId === "pasillo") {
+          initializeImageCompare();
+        }
       }
 
-      beforeImg.addEventListener("load", adjustAfterImage);
-      afterImg.addEventListener("load", adjustAfterImage);
-      window.addEventListener("resize", adjustAfterImage);
+      // Función para alternar imágenes en las secciones "Laboratorio" y "Terraza"
+      function toggleImage(displayId, imageKey) {
+        const imageDisplay = document.getElementById(`${displayId}-display`);
+        const caption = document.getElementById(`${displayId}-caption`);
+        const buttons =
+          imageDisplay.parentElement.querySelectorAll(".toggle-btn");
 
-      slider.addEventListener("mousedown", () => (isDragging = true));
-      window.addEventListener("mouseup", () => (isDragging = false));
+        // 1. Ocultar todas las imágenes y remover 'active' de botones
+        const images = imageDisplay.querySelectorAll("img");
+        images.forEach((img) => img.classList.remove("active"));
+        buttons.forEach((btn) => btn.classList.remove("active"));
 
-      window.addEventListener("mousemove", (e) => {
-        if (!isDragging) return;
-        moveSlider(e.clientX);
-      });
+        // 2. Mostrar la imagen seleccionada
+        const selectedImage = document.getElementById(
+          `${displayId}-${imageKey}`
+        );
+        if (selectedImage) {
+          selectedImage.classList.add("active");
+        }
 
-      slider.addEventListener("touchstart", (e) => {
-        isDragging = true;
-        e.preventDefault();
-      });
+        // 3. Actualizar caption y botón activo
+        caption.textContent = CAPTIONS[displayId][imageKey];
+        const activeButton = imageDisplay.parentElement.querySelector(
+          `.toggle-btn[onclick="toggleImage('${displayId}', '${imageKey}')"]`
+        );
+        if (activeButton) {
+          activeButton.classList.add("active");
+        }
 
-      window.addEventListener("touchend", () => (isDragging = false));
-
-      window.addEventListener("touchmove", (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        moveSlider(e.touches[0].clientX);
-      });
-
-      function moveSlider(clientX) {
-        const rect = compare.getBoundingClientRect();
-        let pos = ((clientX - rect.left) / rect.width) * 100;
-        if (pos < 0) pos = 0;
-        if (pos > 100) pos = 100;
-        afterWrapper.style.width = pos + "%";
-        slider.style.left = pos + "%";
+        // 4. Ajustar la altura del contenedor después de la transición
+        setTimeout(() => {
+          imageDisplay.style.minHeight = `${selectedImage.offsetHeight}px`;
+        }, 400); // 400ms coincide con la duración de la transición CSS
       }
+
+      // Lógica para el comparador de imágenes deslizable (Pasillo VR/MR)
+      function initializeImageCompare() {
+        const compareContainer = document.getElementById("compare");
+        if (!compareContainer) return;
+
+        const afterWrapper = document.getElementById("afterWrapper");
+        const afterImg = document.getElementById("afterImg");
+        const slider = document.getElementById("slider");
+        const beforeImg = document.getElementById("beforeImg");
+        let isDragging = false;
+
+        function synchronizeImages() {
+          const width = beforeImg.offsetWidth;
+          const height = beforeImg.offsetHeight;
+
+          compareContainer.style.height = `${height}px`;
+          afterImg.style.width = `${width}px`;
+          afterImg.style.height = `${height}px`;
+          afterWrapper.style.height = `${height}px`;
+        }
+
+        function slide(clientX) {
+          const rect = compareContainer.getBoundingClientRect();
+          let x = clientX - rect.left;
+
+          if (x < 0) x = 0;
+          if (x > rect.width) x = rect.width;
+
+          afterWrapper.style.width = `${x}px`;
+          slider.style.left = `${x}px`;
+        }
+
+        function onMouseDown(e) {
+          isDragging = true;
+          e.preventDefault();
+          document.addEventListener("mousemove", onMouseMove);
+          document.addEventListener("mouseup", onMouseUp);
+          document.addEventListener("touchmove", onTouchMove);
+          document.addEventListener("touchend", onTouchEnd);
+        }
+
+        function onMouseMove(e) {
+          if (isDragging) {
+            slide(e.clientX);
+          }
+        }
+
+        function onMouseUp() {
+          isDragging = false;
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+        }
+
+        function onTouchStart(e) {
+          isDragging = true;
+          e.preventDefault();
+        }
+
+        function onTouchMove(e) {
+          if (isDragging && e.touches.length > 0) {
+            slide(e.touches[0].clientX);
+          }
+        }
+
+        function onTouchEnd() {
+          isDragging = false;
+        }
+
+        // Eventos
+        slider.addEventListener("mousedown", onMouseDown);
+        slider.addEventListener("touchstart", onTouchStart);
+
+        window.addEventListener("resize", synchronizeImages);
+
+        if (beforeImg.complete) {
+          synchronizeImages();
+        } else {
+          beforeImg.onload = synchronizeImages;
+        }
+
+        // Establecer posición inicial (50%)
+        slide(
+          compareContainer.getBoundingClientRect().left +
+            compareContainer.offsetWidth / 2
+        );
+      }
+
+      // Inicializar la primera sección y los componentes al cargar la página
+      document.addEventListener("DOMContentLoaded", () => {
+        showSection("pasillo");
+
+        // Forzar la inicialización de los otros toggle para ajustar la altura inicial
+        toggleImage("lab", "antes");
+        toggleImage("terraza", "antes");
+      });
     </script>
   </body>
 </html>
