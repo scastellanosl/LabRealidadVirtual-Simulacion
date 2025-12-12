@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Antes y Después - Universidad Distrital</title>
+    <title>Proyección de Infraestructura XR - Universidad Distrital</title>
     <style>
-      /* [Se mantiene todo el CSS] */
+      /* [Se mantiene todo el CSS base] */
       * {
         margin: 0;
         padding: 0;
@@ -116,6 +116,7 @@
         text-align: justify;
       }
 
+      /* Estilos para el Comparador de Imágenes */
       .img-compare-wrapper {
         background-color: #f8f9fa;
         padding: 2rem;
@@ -210,6 +211,7 @@
         font-style: italic;
       }
 
+      /* Estilos para Toggle de Imágenes */
       .image-toggle-wrapper {
         background-color: #f8f9fa;
         padding: 2rem;
@@ -280,6 +282,7 @@
         font-style: italic;
       }
 
+      /* Listas y Tablas */
       .activities-list,
       .benefits-list {
         margin: 1.5rem 0;
@@ -372,6 +375,92 @@
         font-style: italic;
       }
 
+      /* --- ESTILOS GRID (Reutilizados para Accesorios y Apps) --- */
+      .accessories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .accessory-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .accessory-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-color: #003366;
+      }
+
+      .accessory-img-container {
+        width: 100%;
+        height: 200px;
+        background-color: #f4f4f4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .accessory-img-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .accessory-content {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+
+      .accessory-title {
+        font-size: 1.1rem;
+        color: #003366;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
+
+      .accessory-desc {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 1rem;
+        flex-grow: 1;
+      }
+
+      .app-price {
+        font-size: 0.9rem;
+        color: #2c3e50;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid #eee;
+      }
+
+      .buy-btn {
+        display: inline-block;
+        padding: 0.8rem 1rem;
+        background-color: #27ae60;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+
+      .buy-btn:hover {
+        background-color: #219150;
+      }
+
       footer {
         background-color: #1a1a1a;
         color: #b0b0b0;
@@ -423,7 +512,7 @@
   <body>
     <header>
       <div class="header-content">
-        <h1>Comparativa de Infraestructura: Antes y Después</h1>
+        <h1>Proyección de Infraestructura XR</h1>
         <p class="subtitle">Universidad Distrital Francisco José de Caldas</p>
         <nav class="nav-menu">
           <button class="nav-btn active" onclick="showSection('pasillo')">
@@ -434,6 +523,12 @@
           </button>
           <button class="nav-btn" onclick="showSection('terraza')">
             Salón de Visualización
+          </button>
+          <button class="nav-btn" onclick="showSection('accesorios')">
+            Accesorios Quest 3
+          </button>
+          <button class="nav-btn" onclick="showSection('aplicaciones')">
+            Aplicaciones Recomendadas
           </button>
         </nav>
       </div>
@@ -454,13 +549,13 @@
           <div class="img-compare-wrapper">
             <div class="img-compare" id="compare">
               <img
-                src="antes1.jpg"
+                src="img/antes1.jpg"
                 alt="Estado inicial del espacio"
                 id="beforeImg"
               />
               <div class="after-wrapper" id="afterWrapper">
                 <img
-                  src="despues.png"
+                  src="img/despues.png"
                   alt="Estado final del espacio"
                   id="afterImg"
                 />
@@ -838,23 +933,23 @@
             </div>
             <div class="image-display" id="lab-display">
               <img
-                src="lab-antes.jpg"
+                src="img/lab-antes.jpg"
                 alt="Laboratorio - Estado inicial"
                 class="active"
                 id="lab-antes"
               />
               <img
-                src="lab-despues-1.jpg"
+                src="img/lab-despues-1.jpg"
                 alt="Laboratorio - Vista 1"
                 id="lab-despues-1"
               />
               <img
-                src="lab-despues-2.jpg"
+                src="img/lab-despues-2.jpg"
                 alt="Laboratorio - Vista 2"
                 id="lab-despues-2"
               />
               <img
-                src="lab-despues-3.jpg"
+                src="img/lab-despues-3.jpg"
                 alt="Laboratorio - Vista 3"
                 id="lab-despues-3"
               />
@@ -966,23 +1061,23 @@
             </div>
             <div class="image-display" id="terraza-display">
               <img
-                src="terraza-antes.jpg"
+                src="img/terraza-antes.jpg"
                 alt="Terraza - Estado inicial"
                 class="active"
                 id="terraza-antes"
               />
               <img
-                src="terraza-despues-1.jpg"
+                src="img/terraza-despues-1.jpg"
                 alt="Terraza - Vista 1"
                 id="terraza-despues-1"
               />
               <img
-                src="terraza-despues-2.jpg"
+                src="img/terraza-despues-2.jpg"
                 alt="Terraza - Vista 2"
                 id="terraza-despues-2"
               />
               <img
-                src="terraza-despues-3.jpg"
+                src="img/terraza-despues-3.jpg"
                 alt="Terraza - Vista 3"
                 id="terraza-despues-3"
               />
@@ -1053,11 +1148,354 @@
           </ul>
         </section>
       </div>
+
+      <div id="accesorios" class="content-section">
+        <section class="section">
+          <h2>Mejores Accesorios para Meta Quest 3</h2>
+          <p class="description">
+            Para maximizar la experiencia en el laboratorio y prolongar la vida
+            útil de los equipos, se han seleccionado los mejores accesorios
+            disponibles en el mercado. Los enlaces dirigen a Amazon, que ofrece
+            la mayor variedad y, generalmente,
+            <strong>envío gratis a Colombia</strong> por compras superiores a
+            $35 USD (aprox. 150.000 COP).
+          </p>
+
+          <div class="accessories-grid">
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/syntech.jpg" alt="Cable Link Syntech" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Cable Link Syntech (5 Metros)</div>
+                <p class="accessory-desc">
+                  Cable de alta velocidad compatible con PCVR. Esencial para
+                  conectar las gafas a los equipos de cómputo del laboratorio y
+                  ejecutar simulaciones pesadas sin latencia.
+                </p>
+                <a
+                  href="https://www.amazon.com/Syntech-Compatible-Transfer-Charging-Headset/dp/B098399X91"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver Precio (Amazon)</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/amvr_interface.jpg" alt="Interfaz Facial AMVR" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">
+                  Interfaz Facial AMVR (Seda de Hielo)
+                </div>
+                <p class="accessory-desc">
+                  Almohadilla facial reemplazable fabricada en material suave
+                  "Ice Silk" y cuero. Fundamental para la higiene en
+                  laboratorios compartidos, ya que es fresca y fácil de limpiar.
+                </p>
+                <a
+                  href="https://www.amazon.com/-/es/AMVR-FC3-Almohadilla-compatible-accesorios/dp/B0DGGM3GM1/ref=sr_1_3?__mk_es_US=%C3%85M%C3%85%C5%BD%C3%95%C3%91&sr=8-3"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver Precio (Amazon)</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/kiwi_halo.jpg" alt="KIWI design Halo Strap" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">
+                  KIWI design Halo Strap Comfort
+                </div>
+                <p class="accessory-desc">
+                  Correa ergonómica estilo "Halo" con ajuste de perilla.
+                  Distribuye el peso de las gafas de manera uniforme alrededor
+                  de la cabeza, eliminando la presión facial para sesiones
+                  largas.
+                </p>
+                <a
+                  href="https://www.amazon.com/KIWI-design-Halo-Comfort-compatible/dp/B0D78Q47C8/ref=sxin_18_pa_sp_search_thematic_sspa?cv_ct_cx=accesorios+meta+quest+3&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D&sr=1-4-6024b2a3-78e4-4fed-8fed-e1613be3bcce-spons&aref=AE8eFO8G1V&sp_csd=d2lkZ2V0TmFtZT1zcF9zZWFyY2hfdGhlbWF0aWM&psc=1"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver Precio (Amazon)</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img
+                  src="img/grips_silicone.jpg"
+                  alt="Fundas Protectoras de Control"
+                />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">
+                  Fundas de Silicona para Controles
+                </div>
+                <p class="accessory-desc">
+                  Protección completa para los mandos táctiles. Incluye correa
+                  ajustable para los nudillos que permite soltar el control sin
+                  que se caiga, aumentando la inmersión y seguridad.
+                </p>
+                <a
+                  href="https://www.amazon.com/-/es/Controller-Accessories-Controllers-Protector-Thumbstick/dp/B0CJ2PWSWP/ref=sr_1_18?sr=8-18"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver Precio (Amazon)</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="aplicaciones" class="content-section">
+        <section class="section">
+          <h2>Aplicaciones Recomendadas para VR/MR</h2>
+          <p class="description">
+            Selección de software educativo, creativo y de simulación para
+            aprovechar al máximo las capacidades del laboratorio.
+          </p>
+
+          <div class="accessories-grid">
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_gravity.jpg" alt="Gravity Lab" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Gravity Lab</div>
+                <p class="accessory-desc">
+                  App de física donde los usuarios pueden experimentar con
+                  conceptos de gravedad, fuerzas y dinámicas físicas a través de
+                  puzzles.
+                </p>
+                <div class="app-price">US$ 14.99</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/gravity-lab/2004328649624954/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver en Store</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_anatomy.jpg" alt="Human Anatomy VR" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Human Anatomy VR</div>
+                <p class="accessory-desc">
+                  Permite visualizar sistemas anatómicos en 3D para educación
+                  médica o biológica.
+                </p>
+                <div class="app-price">US$ 39.99</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/human-anatomy-vr/6643334382420936/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver en Store</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_dynamic.jpg" alt="Dynamic Languages" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Dynamic Languages</div>
+                <p class="accessory-desc">
+                  Experiencias de aprendizaje de idiomas + cultura mediante
+                  tours en realidad virtual por sitios icónicos.
+                </p>
+                <div class="app-price">Consultar en Store</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Buscar en Store</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_titans.jpg" alt="Titans of Space PLUS" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Titans of Space PLUS</div>
+                <p class="accessory-desc">
+                  Un recorrido por el sistema solar en miniatura; ideal para
+                  astronomía o educación básica científica.
+                </p>
+                <div class="app-price">US$ 9.99</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/titans-of-space-plus/2359857214088490/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver en Store</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_gadgeteer.jpg" alt="Gadgeteer" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Gadgeteer</div>
+                <p class="accessory-desc">
+                  Juego de física y mecánica donde construirás máquinas de
+                  reacciones en cadena; útil para lógica, diseño mecánico y
+                  creatividad.
+                </p>
+                <div class="app-price">US$ 14.99</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/gadgeteer/2567395559960697/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver en Store</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_prisms.jpg" alt="Prisms Math" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Prisms Math</div>
+                <p class="accessory-desc">
+                  App de matemáticas que permite visualizar modelos 3D y
+                  resolver problemas estructurales para entender álgebra,
+                  geometría y más.
+                </p>
+                <div class="app-price">US$ 24.99 / año (Licencia)</div>
+                <a
+                  href="https://www.prismsvr.com/join-the-movement"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver Web Oficial</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_neotrie.jpg" alt="Neotrie VR" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Neotrie VR</div>
+                <p class="accessory-desc">
+                  Herramienta para crear y manipular objetos geométricos en 3D;
+                  ideal para clases de matemática y geometría espacial.
+                </p>
+                <div class="app-price">US$ 19.99</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/neotrie-vr/4121567677901213/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver en Store</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_programmer.jpg" alt="Programmer VR" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Programmer VR</div>
+                <p class="accessory-desc">
+                  Juego educativo para aprender programación: lógica,
+                  estructuras de datos, loops, con inmersión y ejercicios
+                  interactivos.
+                </p>
+                <div class="app-price">US$ 19.99</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/programmer-vr/4987737161326497/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver en Store</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_ocean.jpg" alt="Ocean Rift" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Ocean Rift</div>
+                <p class="accessory-desc">
+                  Simulación acuática: explorar hábitats marinos (animales,
+                  ecosistemas) + modo educativo con puntos de información.
+                </p>
+                <div class="app-price">US$ 9.99</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/ocean-rift/2134272053250863/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver en Store</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_virtuoso.jpg" alt="Virtuoso" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Virtuoso</div>
+                <p class="accessory-desc">
+                  Sandbox musical en VR/MR: tocar instrumentos en un escenario
+                  inmersivo; ideal para música, arte e interacción creativa.
+                </p>
+                <div class="app-price">US$ 19.99</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/virtuoso/4705981139481778/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver en Store</a
+                >
+              </div>
+            </div>
+
+            <div class="accessory-card">
+              <div class="accessory-img-container">
+                <img src="img/app_arkio.jpg" alt="Arkio" />
+              </div>
+              <div class="accessory-content">
+                <div class="accessory-title">Arkio</div>
+                <p class="accessory-desc">
+                  Herramienta de diseño para modelado 3D, arquitectura y diseño
+                  colaborativo en VR/MR.
+                </p>
+                <div class="app-price">Gratis (con compras integradas)</div>
+                <a
+                  href="https://www.meta.com/es-es/experiences/arkio/2280319701979278/"
+                  target="_blank"
+                  class="buy-btn"
+                  >Ver en Store</a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
     <footer>
       <p>Universidad Distrital Francisco José de Caldas</p>
       <p>Laboratorio de Realidad Virtual y Realidad Mixta</p>
+      <p>Desarrollado por Sebastian Castellanos</p>
     </footer>
 
     <script>
@@ -1085,6 +1523,9 @@
 
       // Función para cambiar la sección activa (pestañas de navegación)
       function showSection(sectionId) {
+        // Guardar la sección actual en LocalStorage
+        localStorage.setItem("activeSection", sectionId);
+
         const sections = document.querySelectorAll(".content-section");
         sections.forEach((section) => section.classList.remove("active"));
         document.getElementById(sectionId).classList.add("active");
@@ -1095,7 +1536,7 @@
           .querySelector(`.nav-btn[onclick="showSection('${sectionId}')"]`)
           .classList.add("active");
 
-        // Asegurar que el comparador de imágenes se reinicie o se active correctamente
+        // Asegurar que el comparador de imágenes se reinicie o se active correctamente si es la sección pasillo
         if (sectionId === "pasillo") {
           initializeImageCompare();
         }
@@ -1223,9 +1664,11 @@
         );
       }
 
-      // Inicializar la primera sección y los componentes al cargar la página
+      // Inicializar la sección guardada o por defecto
       document.addEventListener("DOMContentLoaded", () => {
-        showSection("pasillo");
+        // Recuperar la última sección visitada, si no existe, usar 'pasillo'
+        const savedSection = localStorage.getItem("activeSection") || "pasillo";
+        showSection(savedSection);
 
         // Forzar la inicialización de los otros toggle para ajustar la altura inicial
         toggleImage("lab", "antes");
